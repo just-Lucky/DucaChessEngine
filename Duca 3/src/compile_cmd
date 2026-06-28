@@ -1,0 +1,1 @@
+g++ -O3 -march=x86-64-v3 -flto -funroll-loops -DNDEBUG -fno-exceptions -fno-rtti -std=c++17 -pipe *.cpp -o ../final/duca3.exe

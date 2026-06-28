@@ -1,0 +1,33 @@
+[Event "Computer chess game"]
+[Site "DESKTOP-IG4MEFN"]
+[Date "2026.06.26"]
+[Round "?"]
+[White "Riccardo"]
+[Black "Duca5"]
+[Result "0-1"]
+[BlackElo "3000"]
+[ECO "B28"]
+[Opening "Sicilian"]
+[Time "09:58:38"]
+[Variation "O'Kelly, 3.d4 cxd4 4.Nxd4 Nf6"]
+[WhiteElo "700"]
+[Termination "normal"]
+[PlyCount "56"]
+[WhiteType "human"]
+[BlackType "program"]
+
+1. e4 c5 {(c7-c5) 0.00/18 23} 2. Nf3 a6 {(a7-a6) -0.32/18 27} 3. d4 cxd4
+{(c5xd4) 0.00/18 17} 4. Nxd4 Nf6 {(Ng8-f6) -0.02/18 43} 5. Nc3 e5 {(e7-e5)
+0.00/18 5} 6. Nf3 Bb4 {(Bf8-b4) 0.00/18 8} 7. Qd2 d6 {(d7-d6) +0.52/18 38}
+8. Bd3 Bg4 {(Bc8-g4) +0.40/18 42} 9. h3 Bxf3 {(Bg4xf3) +0.24/18 26} 10.
+gxf3 Qe7 {(Qd8-e7) +0.76/18 31} 11. b3 Nc6 {(Nb8-c6) +0.78/18 28} 12. Bb2
+Nd4 {(Nc6-d4) +3.33/18 11} 13. O-O-O Rc8 {(Ra8-c8) +2.43/18 12} 14. Rdg1
+Nxf3 {(Nd4xf3) +8.00/18 9} 15. Qg5 Nxg5 {(Nf3xg5) +21.05/18 17} 16. Rxg5
+Bxc3 {(Bb4xc3) +20.08/18 9} 17. Bxc3 Rxc3 {(Rc8xc3) +20.49/18 25} 18. Rxg7
+Rxd3 {(Rc3xd3) +24.66/18 21} 19. cxd3 Rg8 {(Rh8-g8) +24.13/18 12} 20. Rxg8+
+Nxg8 {(Nf6xg8) +26.15/18 5} 21. Rg1 Qc7+ {(Qe7-c7+) +26.58/18 1} 22. Kb2
+Ne7 {(Ng8-e7) +26.68/18 6} 23. Rg7 Qa5 {(Qc7-a5) +29.50/18 7} 24. Rxf7 Qd2+
+{(Qa5-d2+) +32.28/18 16} 25. Ka3 Kxf7 {(Ke8xf7) +M4/18 14} 26. b4 Qc3+
+{(Qd2-c3+) +M3/18 48} 27. Ka4 Nc6 {(Ne7-c6) +M2/18 26} 28. b5 Qb4#
+{(Qc3-b4+) +M1/18 25} 0-1
+
