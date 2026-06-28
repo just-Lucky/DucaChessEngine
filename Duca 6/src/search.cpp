@@ -71,11 +71,11 @@ static int see(const Board& board, Move move){
     int source = get_source(move);
     int flag = get_flag(move);
     if(flag == EP_CAPTURE) return 0;
-    int victim = get_piece_on_square(board, target);
+    int victim = board.pieces[target];
     if(victim == -1) return 0;
     int gain[32], d = 0;
     gain[0] = see_values[victim % 6];
-    int current_val = see_values[get_piece_on_square(board, source) % 6];
+    int current_val = see_values[board.pieces[source] % 6];
 
     uint64_t occ = board.occupancies[BOTH] ^ (1ULL << source);
     uint64_t attackers = see_get_attackers(board, target, occ) & occ;
@@ -187,7 +187,7 @@ int score_move(const Board& board, Move move, Move tt_move, int ply, Move prev_m
     int source = get_source(move);
     int target = get_target(move);
     
-    int moving_piece = get_piece_on_square(board, source);
+    int moving_piece = board.pieces[source];
     if (moving_piece == -1) return 0;
     
     int piece_type = moving_piece % 6;
@@ -198,7 +198,7 @@ int score_move(const Board& board, Move move, Move tt_move, int ply, Move prev_m
         if (flag == EP_CAPTURE) {
             victim = 0;
         } else {
-            victim = get_piece_on_square(board, target) % 6;
+            victim = board.pieces[target] % 6;
         }
         score = 10000 + piece_values_array[victim] - piece_values_array[piece_type];
     }
@@ -423,7 +423,7 @@ int alpha_beta(Board& board, int alpha, int beta, int depth, int ply, Move prev_
             continue;
         }
 
-        int moving_piece = get_piece_on_square(board, get_source(move)) % 6;
+        int moving_piece = board.pieces[get_source(move)] % 6;
         int moving_side = board.turn;
 
         if (!make_move(board, move, undo)) {

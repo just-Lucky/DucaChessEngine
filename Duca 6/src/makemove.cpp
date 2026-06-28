@@ -198,7 +198,7 @@ void unmake_move(Board& board, Move move, const UndoRecord& undo) {
         board.bitboards[promoted_piece] ^= (1ULL << target);
         piece = (color == WHITE) ? W_PAWN : B_PAWN;
     } else {
-        piece = get_piece_on_square(board, target);
+        piece = board.pieces[target];
         board.bitboards[piece] ^= (1ULL << target);
     }
 
