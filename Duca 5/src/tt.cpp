@@ -13,7 +13,7 @@ bool init_tt(int megabytes) {
         case 1024: break;
         case 2048: break;
         default: {
-            std::cout << "Errore Transposition Table:\n\tDimensioni disponibili: 256MB, 512MB, 1024MB, 2048MB.\n\tDimensione selezionata: " << megabytes << "MB.\n";
+            std::cout << "Transposition Table:\n\tAvailable Dimensions: 256MB, 512MB, 1024MB, 2048MB.\n\tSelected Dimension: " << megabytes << "MB.\n";
             return false;
         }
     }
@@ -32,11 +32,11 @@ bool init_tt(int megabytes) {
     tt_num_entries = static_cast<int>(tt_entries);
     transposition_table = new(std::nothrow) TTEntry[tt_num_entries];
     if(transposition_table == nullptr){
-        std::cout << "Errore Transposition Table: Memoria Insufficiente.\n";
+        std::cout << "Transposition Table: Insufficient Memory.\n";
         return false;
     }
     clear_tt();
-    std::cout << "Transposition Table Inizializzata: " << (tt_num_entries * sizeof(TTEntry)) / (1024 * 1024)
+    std::cout << "Transposition Table Initialized: " << (tt_num_entries * sizeof(TTEntry)) / (1024 * 1024)
               << " MB (" << tt_num_entries << " entries)\n";
     return true;
 }

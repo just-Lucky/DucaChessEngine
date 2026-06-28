@@ -5,9 +5,9 @@
 
 struct Board {
     uint64_t bitboards[12];
-    uint64_t occupancies[3]; // [0]=Bianco, [1]=Nero, [2]=Entrambi
+    uint64_t occupancies[3]; 
     int turn;
-    int enpassant; // casa dove è possibile un en passant (0 a 63)
+    int enpassant; // square where an enpassant is available (0-63 or 64 if no enpassant is available)
     int move;
     int wsc, wlc, bsc, blc;
     uint64_t hash_key;
@@ -18,7 +18,7 @@ struct UndoRecord {
     int enpassant;
     int wsc, wlc, bsc, blc;
     uint64_t hash_key;
-    int captured_piece; // -1 per mosse silenziose
+    int captured_piece; // -1 for quiet moves
 };
 
 inline uint64_t square_to_bit(int square) { return 1ULL << square; }

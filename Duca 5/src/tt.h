@@ -6,9 +6,9 @@
 #define UNKNOWN_SCORE 100000
 
 enum TTFlag {
-    HASH_EXACT = 0, // Punteggio esatto (nessun taglio)
-    HASH_ALPHA = 1, // Upper bound (la mossa era troppo scarsa, score <= alpha)
-    HASH_BETA  = 2  // Lower bound (la mossa era troppo forte, score >= beta)
+    HASH_EXACT = 0,
+    HASH_ALPHA = 1,
+    HASH_BETA  = 2
 };
 
 struct TTEntry {

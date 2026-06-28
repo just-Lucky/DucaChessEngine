@@ -36,7 +36,7 @@ int score_move(const Board& board, Move move, Move tt_move) {
     
     int piece_type = moving_piece % 6;
 
-    // Priorità 1: Catture (MVV-LVA)
+    // Priority 1: Captures (Most Valuable Victim-Least Valuable Attacker)
     if (is_capture(move)) {
         int victim;
         if (flag == EP_CAPTURE) {
@@ -46,11 +46,11 @@ int score_move(const Board& board, Move move, Move tt_move) {
         }
         score = 10000 + piece_values_array[victim] - piece_values_array[piece_type];
     }
-    // Priorità 2: Promozioni
+    // Priority 2: Promotions
     else if (flag >= PR_KNIGHT) {
         score += 9000; 
     }
-    // Priorità 3: Mosse Silenziose (Differenziale PST)
+    // Priority 3: Quiet Moves
     else {
         int target_sq = (board.turn == WHITE) ? target : target ^ 56;
         int source_sq = (board.turn == WHITE) ? source : source ^ 56;

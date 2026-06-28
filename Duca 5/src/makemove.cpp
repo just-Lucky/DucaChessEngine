@@ -4,8 +4,8 @@
 #include "attacks.h"
 #include "eval.h"
 
-    // Maschera per aggiornare i diritti di arrocco in base alla casa toccata.
-    // Indici: A1=0, E1=4, H1=7, A8=56, E8=60, H8=63. Gli altri non modificano l'arrocco (15).
+    // Masck for updating castling rights based on the touched square
+    // Indexes: A1=0, E1=4, H1=7, A8=56, E8=60, H8=63. Others don't modify castling (15).
     const int castling_rights_update[64] = {
         13, 15, 15, 15, 12, 15, 15, 14,
         15, 15, 15, 15, 15, 15, 15, 15,

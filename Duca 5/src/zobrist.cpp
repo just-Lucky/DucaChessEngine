@@ -5,7 +5,7 @@ uint64_t zobrist_enpassant[8];
 uint64_t zobrist_castling[16];
 uint64_t zobrist_side;
 
-// Generatore PRNG Xorshift64
+// PRNG Xorshift64 Generator
 uint64_t random_uint64() {
     static uint64_t seed = 0x98f1071ab85db23fULL;
     seed ^= seed >> 12;
@@ -14,7 +14,7 @@ uint64_t random_uint64() {
     return seed * 0x2545F4914F6CDD1DULL;
 }
 
-// Inizializza tutte le tabelle con numeri casuali a 64-bit
+// Initializes all tables with 64 bits numbers
 void init_zobrist() {
     for (int p = 0; p < 12; p++) {
         for (int s = 0; s < 64; s++) {
@@ -30,7 +30,7 @@ void init_zobrist() {
     zobrist_side = random_uint64();
 }
 
-// Genera la chiave hash da zero analizzando interamente la scacchiera (usato solo all'inizio)
+// Generates the hash key from scratch by analyzing the whole board
 uint64_t generate_hash(const Board& board) {
     uint64_t hash = 0ULL;
     

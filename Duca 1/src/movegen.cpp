@@ -11,12 +11,13 @@ namespace {
     }
 }
 
+// generates a list of pseudo-legal moves following pieces' movement patterns, move legality is later verified in make_move()
 void generate_pseudo_legal_moves(const Board& board, MoveList& move_list) {
     int color = board.turn;
     int enemy = color ^ 1;
     uint64_t empty_squares = ~board.occupancies[BOTH];
 
-    // GENERAZIONE PEDONI
+    // Pawn generation
     uint64_t pawns = board.bitboards[(color == WHITE) ? W_PAWN : B_PAWN];
     
     while (pawns) {
@@ -25,14 +26,14 @@ void generate_pseudo_legal_moves(const Board& board, MoveList& move_list) {
         int promo_rank = (color == WHITE) ? 7 : 0;
         int start_rank = (color == WHITE) ? 1 : 6;
 
-        // Movimento in avanti (singolo e doppio)
+        // Forward movement
         if (empty_squares & (1ULL << tgt)) {
             if (tgt / 8 == promo_rank) {
                 add_pawn_promotions(move_list, src, tgt, false);
             } else {
                 move_list.add_move(encode_move(src, tgt, QUIET_MOVE));
                 
-                // Doppio passo
+                // Double push
                 int double_tgt = (color == WHITE) ? tgt + 8 : tgt - 8;
                 if ((src / 8 == start_rank) && (empty_squares & (1ULL << double_tgt))) {
                     move_list.add_move(encode_move(src, double_tgt, DOUBLE_PAWN_PUSH));
@@ -40,7 +41,7 @@ void generate_pseudo_legal_moves(const Board& board, MoveList& move_list) {
             }
         }
 
-        // Catture diagonali
+        // Diagonal captures
         uint64_t attacks = pawn_attacks[color][src] & board.occupancies[enemy];
         while (attacks) {
             int cap_tgt = __builtin_ctzll(attacks);
@@ -52,7 +53,7 @@ void generate_pseudo_legal_moves(const Board& board, MoveList& move_list) {
             attacks &= attacks - 1;
         }
 
-        // Cattura En Passant
+        // En Passant
         if (board.enpassant != 64) {
             if (pawn_attacks[color][src] & (1ULL << board.enpassant)) {
                 move_list.add_move(encode_move(src, board.enpassant, EP_CAPTURE));
@@ -62,7 +63,7 @@ void generate_pseudo_legal_moves(const Board& board, MoveList& move_list) {
         pawns &= pawns - 1;
     }
 
-    // GENERAZIONE CAVALLI, ALFIERI, TORRI, REGINE E RE
+    // Knights, Bishops, Rooks, Queens and Kings Generation
     int start_piece = (color == WHITE) ? W_KNIGHT : B_KNIGHT;
     int end_piece = (color == WHITE) ? W_KING : B_KING;
 
@@ -92,7 +93,7 @@ void generate_pseudo_legal_moves(const Board& board, MoveList& move_list) {
         }
     }
 
-    // 3. GENERAZIONE ARROCCO
+    // Castle Generation
     if (color == WHITE) {
         if (board.wsc && !(board.occupancies[BOTH] & ((1ULL << F1) | (1ULL << G1)))) {
             if (!is_square_attacked(E1, BLACK, board) && !is_square_attacked(F1, BLACK, board) && !is_square_attacked(G1, BLACK, board)) {

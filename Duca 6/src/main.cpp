@@ -25,9 +25,9 @@ int main() {
     init_zobrist();
     int size = 0;
     if(read_tt_size("tt", size)){
-        std::cout << "Selezionata dimensione TT: " << size << "MB" << std::endl;
+        std::cout << "Selected Transposition Table Dimension: " << size << "MB" << std::endl;
     }else{
-        std::cout << "Errore durante l'apertura del file." << std::endl;
+        std::cout << "An error occured while reading the file." << std::endl;
         return 1;
     }
     if(!init_tt(size)) return 1;

@@ -4,9 +4,6 @@
 #include "zobrist.h"
 #include "tt.h"
 #include "uci.h"
-// #include "perft.h"
-// #include "eval.h"
-// #include "search.h"
 
 int main() {
     init_leaping_attacks();

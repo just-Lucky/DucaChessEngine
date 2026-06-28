@@ -2,20 +2,20 @@
 #include <cstdint>
 
 enum MoveFlags {
-    QUIET_MOVE = 0,         // Mossa normale
-    DOUBLE_PAWN_PUSH = 1,   // Spinta doppia del pedone (es. e2-e4)
-    KING_CASTLE = 2,        // Arrocco corto
-    QUEEN_CASTLE = 3,       // Arrocco lungo
-    CAPTURE = 4,            // Cattura normale
-    EP_CAPTURE = 5,         // Cattura En Passant
+    QUIET_MOVE = 0,         // Normal move
+    DOUBLE_PAWN_PUSH = 1,   // Pawn pushed two squares from their starting rank
+    KING_CASTLE = 2,        // Short castle
+    QUEEN_CASTLE = 3,       // Long Castle
+    CAPTURE = 4,            // Capture
+    EP_CAPTURE = 5,         // En Passant Capture
     
-    // Promozioni (senza cattura)
+    // Promotions without capture
     PR_KNIGHT = 8,
     PR_BISHOP = 9,
     PR_ROOK = 10,
     PR_QUEEN = 11,
     
-    // Promozioni (con cattura)
+    // Promotions with capture
     PC_KNIGHT = 12,
     PC_BISHOP = 13,
     PC_ROOK = 14,

@@ -38,7 +38,7 @@ void initialize_starter_board(Board& board) {
     board.bitboards[B_KING]   = square_to_bit(E8);
 
     board.turn = WHITE;
-    board.enpassant = 64; // numero fuori range -> nessun enpassant
+    board.enpassant = 64; // out of range number -> no enpassant
     board.move = 0;
     board.wsc = board.wlc = board.bsc = board.blc = 1;
     update_occupancies(board);
@@ -73,9 +73,8 @@ void parse_fen(Board& board, const std::string& fen) {
 
     size_t i = 0;
 
-    // Parsa la disposizione dei pezzi sulla scacchiera
-    int rank = 7; // FEN parte dall'ottava riga
-    int file = 0; // e dalla colonna A
+    int rank = 7; // FEN starts on the eighth rank
+    int file = 0; // and on the first file
 
     while (rank >= 0 && i < fen.length() && fen[i] != ' ') {
         char c = fen[i];
@@ -110,7 +109,7 @@ void parse_fen(Board& board, const std::string& fen) {
 
     if (i < fen.length() && fen[i] == ' ') i++;
 
-    // Parsa il turno di gioco
+    // Parses the game turn
     if (i < fen.length()) {
         board.turn = (fen[i] == 'w') ? WHITE : BLACK;
         i++;
@@ -118,7 +117,7 @@ void parse_fen(Board& board, const std::string& fen) {
 
     if (i < fen.length() && fen[i] == ' ') i++;
 
-    // Parsa i diritti di arrocco
+    // Parses castling rights
     while (i < fen.length() && fen[i] != ' ') {
         char c = fen[i];
         if (c == 'K') board.wsc = 1;
@@ -130,7 +129,7 @@ void parse_fen(Board& board, const std::string& fen) {
 
     if (i < fen.length() && fen[i] == ' ') i++;
 
-    // Parsa la casa En Passant
+    // Parses enpassant square
     if (i < fen.length() && fen[i] != ' ') {
         if (fen[i] == '-') {
             board.enpassant = 64;

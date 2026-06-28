@@ -15,7 +15,7 @@ void init_tt(int megabytes) {
     
     transposition_table = new TTEntry[tt_num_entries];
     clear_tt();
-    std::cout << "Transposition Table Inizializzata: " << megabytes 
+    std::cout << "Transposition Table Initialized: " << megabytes 
               << " MB (" << tt_num_entries << " entries)\n";
 }
 

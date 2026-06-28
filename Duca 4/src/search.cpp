@@ -44,7 +44,7 @@ int score_move(const Board& board, Move move, Move tt_move, int ply) {
     
     int piece_type = moving_piece % 6;
 
-    // Priorità 1: Catture (MVV-LVA)
+    // Priority 1: Capture (Most Valuable Victim-Least Valuable Attacker)
     if (is_capture(move)) {
         int victim;
         if (flag == EP_CAPTURE) {
@@ -54,14 +54,14 @@ int score_move(const Board& board, Move move, Move tt_move, int ply) {
         }
         score = 10000 + piece_values_array[victim] - piece_values_array[piece_type];
     }
-    // Priorità 2: Promozioni
+    // Priority 2: Promotions
     else if (flag >= PR_KNIGHT) {
         score += 9000; 
         if (flag == PR_QUEEN || flag == PC_QUEEN) {
             score += 1000;
         }
     }
-    // Priorità 3: Mosse Silenziose
+    // Priority 3: Quiet moves
     else {
         if (ply < 64 && killer_moves[0][ply] == move) {
             return 8000; 
@@ -359,7 +359,7 @@ void search_position(Board& board, int max_depth) {
     for (int current_depth = 1; current_depth <= max_depth; ++current_depth) {
         nodes_searched = 0;
         quiescence_nodes = 0;
-
+        // Aspiration Windows
         int score;
         if (current_depth >= 5) {
             int window = 50; 

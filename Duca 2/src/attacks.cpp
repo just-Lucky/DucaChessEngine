@@ -10,17 +10,17 @@ uint64_t mask_knight_attacks(int square) {
     uint64_t attacks = 0ULL;
     uint64_t bitboard = 1ULL << square;
 
-    // Spostamenti verso l'alto (Sinistra: << bit)
-    if ((bitboard << 17) & not_A_file)  attacks |= (bitboard << 17); // Su 2, Destra 1
-    if ((bitboard << 15) & not_H_file)  attacks |= (bitboard << 15); // Su 2, Sinistra 1
-    if ((bitboard << 10) & not_AB_file) attacks |= (bitboard << 10); // Su 1, Destra 2
-    if ((bitboard <<  6) & not_GH_file) attacks |= (bitboard <<  6); // Su 1, Sinistra 2
+    // Upward movements (Left: << bit)
+    if ((bitboard << 17) & not_A_file)  attacks |= (bitboard << 17); // 2 Up, 1 Right
+    if ((bitboard << 15) & not_H_file)  attacks |= (bitboard << 15); // 2 Up, 1 Left
+    if ((bitboard << 10) & not_AB_file) attacks |= (bitboard << 10); // 1 Up, 2 Right
+    if ((bitboard <<  6) & not_GH_file) attacks |= (bitboard <<  6); // 1 Up, 2 Left
 
-    // Spostamenti verso il basso (Destra: >> bit)
-    if ((bitboard >> 15) & not_A_file)  attacks |= (bitboard >> 15); // Giù 2, Destra 1
-    if ((bitboard >> 17) & not_H_file)  attacks |= (bitboard >> 17); // Giù 2, Sinistra 1
-    if ((bitboard >>  6) & not_AB_file) attacks |= (bitboard >>  6); // Giù 1, Destra 2
-    if ((bitboard >> 10) & not_GH_file) attacks |= (bitboard >> 10); // Giù 1, Sinistra 2
+    // Downward movements (Right: >> bit)
+    if ((bitboard >> 15) & not_A_file)  attacks |= (bitboard >> 15); // 2 Down, 1 Right
+    if ((bitboard >> 17) & not_H_file)  attacks |= (bitboard >> 17); // 2 Down, 1 Left
+    if ((bitboard >>  6) & not_AB_file) attacks |= (bitboard >>  6); // 1 Down, 2 Right
+    if ((bitboard >> 10) & not_GH_file) attacks |= (bitboard >> 10); // 1 Down, 2 Left
 
     return attacks;
 }
@@ -29,16 +29,16 @@ uint64_t mask_king_attacks(int square) {
     uint64_t attacks = 0ULL;
     uint64_t bitboard = 1ULL << square;
 
-    // Movimenti
-    if (bitboard >> 8) attacks |= (bitboard >> 8); // Giù
-    if ((bitboard >> 9) & not_H_file) attacks |= (bitboard >> 9); // Giù-Sinistra
-    if ((bitboard >> 7) & not_A_file) attacks |= (bitboard >> 7); // Giù-Destra
-    if ((bitboard >> 1) & not_H_file) attacks |= (bitboard >> 1); // Sinistra
+    // Movements
+    if (bitboard >> 8) attacks |= (bitboard >> 8); // Down
+    if ((bitboard >> 9) & not_H_file) attacks |= (bitboard >> 9); // Down-Left
+    if ((bitboard >> 7) & not_A_file) attacks |= (bitboard >> 7); // Down-Right
+    if ((bitboard >> 1) & not_H_file) attacks |= (bitboard >> 1); // Left
 
-    if (bitboard << 8) attacks |= (bitboard << 8); // Su
-    if ((bitboard << 9) & not_A_file) attacks |= (bitboard << 9); // Su-Destra
-    if ((bitboard << 7) & not_H_file) attacks |= (bitboard << 7); // Su-Sinistra
-    if ((bitboard << 1) & not_A_file) attacks |= (bitboard << 1); // Destra
+    if (bitboard << 8) attacks |= (bitboard << 8); // Up
+    if ((bitboard << 9) & not_A_file) attacks |= (bitboard << 9); // Up-Right
+    if ((bitboard << 7) & not_H_file) attacks |= (bitboard << 7); // Up-Left
+    if ((bitboard << 1) & not_A_file) attacks |= (bitboard << 1); // Right
 
     return attacks;
 }
@@ -47,18 +47,16 @@ uint64_t mask_pawn_attacks(int color, int square) {
     uint64_t attacks = 0ULL;
     uint64_t bitboard = 1ULL << square;
 
-    // Se è il turno del BIANCO (color == 0)
-    if (color == 0) {
-        // Attacco verso Su-Sinistra (evitando il wrap sulla colonna H)
+    if (color == WHITE) {
+        // Up-Left attack
         if ((bitboard << 7) & not_H_file) attacks |= (bitboard << 7);
-        // Attacco verso Su-Destra (evitando il wrap sulla colonna A)
+        // Up-Right attack
         if ((bitboard << 9) & not_A_file) attacks |= (bitboard << 9);
     }
-    // Se è il turno del NERO (color == 1)
     else {
-        // Attacco verso Giù-Sinistra
+        // Down-Left attack
         if ((bitboard >> 9) & not_H_file) attacks |= (bitboard >> 9);
-        // Attacco verso Giù-Destra
+        // Down-Right attack
         if ((bitboard >> 7) & not_A_file) attacks |= (bitboard >> 7);
     }
 
@@ -89,8 +87,8 @@ void init_leaping_attacks() {
         knight_attacks[square] = mask_knight_attacks(square);
         king_attacks[square] = mask_king_attacks(square);
         
-        pawn_attacks[0][square] = mask_pawn_attacks(0, square); // Bianco
-        pawn_attacks[1][square] = mask_pawn_attacks(1, square); // Nero
+        pawn_attacks[WHITE][square] = mask_pawn_attacks(WHITE, square);
+        pawn_attacks[BLACK][square] = mask_pawn_attacks(BLACK, square);
     }
 }
     uint64_t prng_magic() {
@@ -105,7 +103,6 @@ void init_leaping_attacks() {
         return prng_magic() & prng_magic() & prng_magic();
     }
 
-    // Helper per contare i bit di una maschera
     int count_bits(uint64_t b) {
         int count = 0;
         while (b) { count++; b &= b - 1; }
@@ -228,27 +225,27 @@ void init_sliders_attacks() {
 }
 
 bool is_square_attacked(int square, int attacker_side, const Board& board) {
-    // Attacchi dai Pedoni
+    // Pawn attacks
     int defender_side = attacker_side ^ 1;
     int attacker_pawn = (attacker_side == WHITE) ? W_PAWN : B_PAWN;
     if (pawn_attacks[defender_side][square] & board.bitboards[attacker_pawn]) return true;
 
-    // Attacchi dai Cavalli
+    // Knight attacks
     int attacker_knight = (attacker_side == WHITE) ? W_KNIGHT : B_KNIGHT;
     if (knight_attacks[square] & board.bitboards[attacker_knight]) return true;
 
-    // Attacchi dal Re
+    // King attacks
     int attacker_king = (attacker_side == WHITE) ? W_KING : B_KING;
     if (king_attacks[square] & board.bitboards[attacker_king]) return true;
 
-    // Attacchi da Alfieri e Regine (Linee Diagonali)
+    // Diagonal attacks
     int attacker_bishop = (attacker_side == WHITE) ? W_BISHOP : B_BISHOP;
     int attacker_queen  = (attacker_side == WHITE) ? W_QUEEN : B_QUEEN;
     uint64_t diagonal_attackers = board.bitboards[attacker_bishop] | board.bitboards[attacker_queen];
     
     if (get_bishop_attacks(square, board.occupancies[BOTH]) & diagonal_attackers) return true;
 
-    // Attacchi da Torri e Regine (Linee Rette)
+    // Straight attacks
     int attacker_rook = (attacker_side == WHITE) ? W_ROOK : B_ROOK;
     uint64_t straight_attackers = board.bitboards[attacker_rook] | board.bitboards[attacker_queen];
     

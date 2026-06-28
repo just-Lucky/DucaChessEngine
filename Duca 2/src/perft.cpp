@@ -25,7 +25,7 @@ uint64_t perft_driver(Board& board, int depth) {
 
 void perft_test(Board& board, int depth) {
     std::cout << "\n========================================\n";
-    std::cout << "  INIZIO PERFT TEST (Profondita' " << depth << ")\n"; 
+    std::cout << "  STARTING PERFT TEST (DEPTH " << depth << ")\n"; 
     std::cout << "========================================\n";
     
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -54,8 +54,8 @@ void perft_test(Board& board, int depth) {
     std::chrono::duration<double> elapsed = end_time - start_time;
 
     std::cout << "----------------------------------------\n";
-    std::cout << "Nodi totali analizzati : " << total_nodes << "\n";
-    std::cout << "Tempo impiegato        : " << std::fixed << std::setprecision(3) << elapsed.count() << " secondi\n";
-    std::cout << "Performance (NPS)      : " << (uint64_t)(total_nodes / elapsed.count()) << " nodi/sec\n";
+    std::cout << "Total nodes analyzed  : " << total_nodes << "\n";
+    std::cout << "Elapsed Time          : " << std::fixed << std::setprecision(3) << elapsed.count() << " seconds\n";
+    std::cout << "Nodes per Second      : " << (uint64_t)(total_nodes / elapsed.count()) << " nodes/sec\n";
     std::cout << "========================================\n\n";
 }

@@ -11,7 +11,7 @@
 
 std::thread search_thread;
 
-// Helper per convertire una mossa interna a 16 bit in formato UCI
+// Helper that converts internal 16-bit move in UCI format
 std::string move_to_string(Move move) {
     if (!move) return "0000";
     int src = get_source(move);
@@ -33,7 +33,7 @@ std::string move_to_string(Move move) {
     return s;
 }
 
-// Helper per parsare una stringa UCI e trovare la corrispondente mossa pseudo-legale valida
+// Helper that parses UCI string adn finds corresponding move
 Move parse_move(Board& board, const std::string& move_str) {
     MoveList move_list;
     generate_pseudo_legal_moves(board, move_list);
@@ -51,7 +51,7 @@ Move parse_move(Board& board, const std::string& move_str) {
     return 0;
 }
 
-// Parsa il comando "position [startpos | fen ...] moves ..."
+// Parses the "position [startpos | fen ...] moves ..." command
 void parse_position(Board& board, std::stringstream& ss) {
     std::string token;
     ss >> token;
@@ -89,7 +89,7 @@ void parse_position(Board& board, std::stringstream& ss) {
 
 void parse_go(Board& board, std::stringstream& ss) {
     std::string token;
-    int depth = 8;
+    int depth = 8; // Engine's Max depth
     long long wtime = -1, btime = -1, winc = 0, binc = 0, movestogo = 30, movetime = -1;
     bool infinite = false;
     
@@ -155,7 +155,7 @@ void uci_loop() {
         
         if (command == "uci") {
             std::cout << "id name Duca1\n";
-            std::cout << "id author Bruscagin\n";
+            std::cout << "id author justLucky\n";
             std::cout << "uciok\n";
         } 
         else if (command == "isready") {

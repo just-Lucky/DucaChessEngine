@@ -36,6 +36,7 @@ bool is_repetition(uint64_t hash, int ply) {
     return false;
 }
 
+// Static Exchange Evaluation
 static const int see_values[6] = {100, 300, 300, 500, 900, 20000};
 
 static uint64_t see_get_attackers(const Board& board, int sq, uint64_t occ){
@@ -111,7 +112,7 @@ static int see(const Board& board, Move move){
     return gain[0];
 }
 
-// per quiescence
+// opposed to generate_pseudo_legal_moves(), this only generates captures. Useful for quiescence search
 static void generate_captures(const Board& board, MoveList& list) {
     int color = board.turn;
     int enemy  = color ^ 1;
@@ -191,7 +192,7 @@ int score_move(const Board& board, Move move, Move tt_move, int ply, Move prev_m
     
     int piece_type = moving_piece % 6;
 
-    // Priorità 1: Catture (MVV-LVA)
+    // Priority 1: Captures (Most Valuable Victim-Least Valuable Attacker)
     if (is_capture(move)) {
         int victim;
         if (flag == EP_CAPTURE) {
@@ -201,14 +202,14 @@ int score_move(const Board& board, Move move, Move tt_move, int ply, Move prev_m
         }
         score = 10000 + piece_values_array[victim] - piece_values_array[piece_type];
     }
-    // Priorità 2: Promozioni
+    // Priority 2: Promotions
     else if (flag >= PR_KNIGHT) {
         score += 9000; 
         if (flag == PR_QUEEN || flag == PC_QUEEN) {
             score += 1000;
         }
     }
-    // Priorità 3: Mosse Silenziose
+    // Priority 3: Quiet Moves
     else {
         if (ply < 64 && killer_moves[0][ply] == move) {
             return 8000; 
