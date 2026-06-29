@@ -1,0 +1,1 @@
+g++ -O3 -march=x86-64-v3 -flto -funroll-loops -DNDEBUG -DUSE_AVX2 -DUSE_SSE41 -DUSE_SSE2 -DUSE_SSE -DUSE_SSE3 -DIS_64BIT -ffast-math -fno-exceptions -fno-rtti -std=c++17 -pipe *.cpp -o ../final/duca7.exe
