@@ -1,6 +1,6 @@
 # Duca Chess Engine
 
-> *Duca* (Italian for *Duke*) is a UCI-compliant chess engine written from scratch in C++17, built around an NNUE evaluation function and a heavily optimized alpha-beta search.
+> *Duca* is a UCI-compliant chess engine written from scratch in C++17, built around an NNUE evaluation function and a heavily optimized alpha-beta search.
 
 ---
 
@@ -138,6 +138,42 @@ Multiple threads run independent iterative deepening searches on private copies 
 - [Stockfish](https://github.com/official-stockfish/Stockfish) — NNUE architecture and HalfKP network format
 - [Chess Programming Wiki](https://www.chessprogramming.org) — invaluable reference for every technique implemented here
 - [Bruce Moreland's NNUE resources](https://github.com/dshawul/nnue-probe) — NNUE probe library that inspired the integration approach
+
+
+---
+
+## About Duca's Future
+
+Duca was a personal experiment to test and push my limits as a programmer, its code is probably very buggy as I don't have
+extensive C++ knowledge, and I just recently started using it; for this reason, if anyone was to test Duca and review its code
+and find any bugs, I'd love to hear from them in order to fix it, you can find my contact information on [my website](https://just-lucky.github.io/Website).
+
+### Will I keep updating Duca?
+
+Unfortunately, I have reached a dead end: I have developed and tested this Chess Engine on quite old hardware, which is not able
+to further use Duca, because of multithreading which was implemented in Duca 7. Multithreading was necessary for Duca to be
+considered a real Chess Engine, and I have implemented it because to my knowledge and after extensive research, I was not able
+to find further optimizations with Duca 6's code, the only real optimization left was Lazy SMP multithreading, which now
+*COULD* be improved, however, my PC is not able to handle LazySMP multithreading, as it only scales well on 6 or more search threads, my PC unfortunately can only use a maximum of 4.
+Having this said, it's most likely that I won't be able to update Duca with my current hardware, except for bug fixes.
+I won't ask anyone to donate anything for this project or its future, but if anyone wills to do so it'd be very much appreciated and they could do so by contacting me, as said before, you can find my contact information on [my website](https://just-lucky.github.io/Website).
+
+### Why even bother when there are already thousands of other Chess Engines?
+
+I completely agree, I didn't have any reason to do this, there are already many other Chess Engines out there, most famous example would be Stockfish, which I see as an *UNRIVALED* monster.
+There are 4 main reasons why I chose to develop this Chess Engine:
+
+1. I wanted to see how difficult it would be to do so
+2. I like Chess
+3. I wanted to expand my C++ knowledge
+4. I was bored
+
+I don't even think this project will ever be useful to anyone, it probably won't even be useful to me, I just liked the idea of having developed a Chess engine on my own.
+
+### Why is it named 'Duca'?
+
+I'm from Vigevano(Italy), a city which is also known as "Città Ducale"(Ducal city), and I'm very proud of my heritage, for this reason, I have named my Chess Engine "Duca"(which means Duke in italian), simply an homage to my home town.
+
 
 ---
 
