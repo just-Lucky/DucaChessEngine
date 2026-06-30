@@ -594,7 +594,7 @@ static void run_search(Board board, int max_depth, ThreadData& td, bool is_main)
             std::cout << "info depth " << current_depth << " seldepth " << current_depth;
             if(score > MATE_VALUE - 100) std::cout << " score mate " << (MATE_VALUE-score+1)/2;
             else if(score < -MATE_VALUE + 100) std::cout << " score mate -" << (MATE_VALUE+score+1)/2;
-            else std::cout << "score cp " << score;
+            else std::cout << " score cp " << score;
             std::cout << " time " << elapsed << " nodes " << total << " nps " << nps;
             if (td.root_best_move) {
                 std::cout << " pv "; print_move_uci(td.root_best_move);

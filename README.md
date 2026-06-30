@@ -58,7 +58,7 @@ g++ -O3 -march=native -flto -funroll-loops \
 
 The NNUE network file (`nn-04cf2b4ed1da.nnue`) must be placed in the same directory as the executable, as well as
 a file named `threads` and a file named `tt`.
-The `threads` files must contain the number of search threads you intend to use, this number should be between 1 and
+The `threads` file must contain the number of search threads you intend to use, this number should be between 1 and
 your CPU's number of cores.
 The `tt` file must contain the number of MegaBytes you want to allocate to the `Transposition Table`, it also must be a
 power of 2 between 256 and 2048.
